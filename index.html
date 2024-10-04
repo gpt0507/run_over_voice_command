@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voice Controlled Video Player</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+  <section class="main">
+    <header>
+      <div class="container">
+        <a href="javascript:void(0)" class="logo">{Zeetron Networks}</a>
+      </div>
+      <nav>
+        <ul>
+          <li><i class="fa fa-phone"></i>+91-7014281008</li>
+          <li><i class="fa fa-envelope"></i>websporsolutions@gmail.com</li>
+        </ul>
+      </nav>
+    </header>
+
+    <section class="video-outer">
+      <video id="myvideo" controls>
+        <source src="./Choli_ke_Peeche.mp4" type="video/mp4">
+      </video>
+      <div class="form-area-outer">
+        <div class="form-area-inner">
+          <h2>Get in touch with us!</h2>
+          <form id="myform">
+            <input type="text" id="uname" placeholder="Enter Username">
+            <input type="email" id="emailadd" placeholder="Enter Emailid">
+            <input type="tel" id="telnum" placeholder="Enter Mobile No.">
+            <textarea id="mymessage" placeholder="Message"></textarea>
+            <button type="submit">Submit</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </section>
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.6.0/annyang.min.js"></script>
+  <script>
+    if (annyang) {
+      // Define voice commands
+      var commands = {
+        'play video': function () {
+          document.getElementById('myvideo').play();
+          console.log('Playing video'); // Debugging line
+        },
+        'pause video': function () {
+          document.getElementById('myvideo').pause();
+          console.log('Pausing video'); // Debugging line
+        }
+      };
+
+      // Add commands to annyang
+      annyang.addCommands(commands);
+
+      // Debugging: log the recognized voice commands
+      annyang.addCallback('result', function (phrases) {
+        console.log("Recognized phrase: ", phrases);
+      });
+
+      // Error handling
+      annyang.addCallback('error', function () {
+        console.error('Error occurred in speech recognition.');
+      });
+
+      annyang.addCallback('errorNetwork', function () {
+        console.error('Network error.');
+      });
+
+      annyang.addCallback('errorPermissionBlocked', function () {
+        console.error('Permission to use speech recognition is blocked.');
+      });
+
+      annyang.addCallback('errorPermissionDenied', function () {
+        console.error('Permission to use speech recognition is denied.');
+      });
+
+      // Start listening for voice commands
+      annyang.start({ continuous: false });
+    } else {
+      console.error('Annyang not supported in this browser.');
+    }
+  </script>
+</body>
+
+</html>

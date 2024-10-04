@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voice Command Example</title>
+</head>
+
+<body>
+  <h1>Voice Command Control</h1>
+  <button id="start-recognition">Click to Enable Voice Command</button>
+  <video id="myvideo" controls>
+    <source src="./Choli_ke_Peeche.mp4" type="video/mp4">
+  </video>
+
+  <script>
+    // Check if the browser supports speech recognition
+    window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    // Initialize speech recognition
+    const recognition = new SpeechRecognition();
+    recognition.interimResults = false;
+    recognition.lang = 'en-US'; // Set language
+
+    // When the user clicks the button, start listening for voice commands
+    document.getElementById('start-recognition').addEventListener('click', () => {
+      recognition.start();
+      console.log("Voice recognition started...");
+    });
+
+    // Handle voice commands
+    recognition.addEventListener('result', event => {
+      const transcript = event.results[0][0].transcript.toLowerCase();
+      console.log("Recognized:", transcript);
+
+      // Execute actions based on the voice command
+      if (transcript.includes('play video')) {
+        document.getElementById('myvideo').play();
+        console.log('Playing video...');
+      }
+      else if (transcript.includes('pause video')) {
+        document.getElementById('myvideo').pause();
+        console.log('Pausing video...');
+      }
+    });
+
+    // Restart recognition when it ends
+    recognition.addEventListener('end', () => {
+      console.log("Voice recognition ended.");
+    });
+  </script>
+</body>
+
+</html>
